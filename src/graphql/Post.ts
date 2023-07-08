@@ -1,4 +1,4 @@
-import { extendType, nonNull, objectType, queryType, stringArg } from "nexus";
+import { extendType, idArg, nonNull, objectType, queryType, stringArg } from "nexus";
 import { NexusGenObjects } from "../../nexus-typegen";
 export const Post = objectType({
     name : "Post", 
@@ -49,6 +49,43 @@ export const LinkMutation = extendType({
             },
         });
 
+        // deletePost mutation
+        t.nonNull.field("deletePost", {
+            type : "Post",
+            args : {
+                id : nonNull(idArg())
+            },
+            resolve : async(parent, args, context) => {
+                const {id} = args;
+                let post = await context.prisma.post.delete({where: {id : parseInt(id)}});
+                return post;
+            }
+        })
+
+        // updatePost
+        t.nonNull.field("updatePost", {
+            type : "Post",
+            args : {
+                id : nonNull(idArg()),
+                title : nonNull(stringArg()),
+                description : nonNull(stringArg()),
+                content : nonNull(stringArg())
+            },
+            resolve : async (parent, args, context) => {
+                const {id, title, description, content} = args;
+                let post = context.prisma.post.update({
+                    where : {
+                        id : parseInt(id),
+                    },
+                    data : {
+                        title,
+                        description,
+                        content,
+                    },
+                });
+                return post;
+            },
+        });
 
     }
 })

@@ -9,6 +9,8 @@ type AuthPayload {
 
 type Mutation {
   createPost(content: String!, description: String!, title: String!): Post!
+  deletePost(id: ID!): Post!
+  updatePost(content: String!, description: String!, id: ID!, title: String!): Post!
 }
 
 type Post {

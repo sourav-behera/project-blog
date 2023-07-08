@@ -64,6 +64,8 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post']; // Post!
+    deletePost: NexusGenRootTypes['Post']; // Post!
+    updatePost: NexusGenRootTypes['Post']; // Post!
   }
   Post: { // field return type
     content: string; // String!
@@ -88,6 +90,8 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createPost: 'Post'
+    deletePost: 'Post'
+    updatePost: 'Post'
   }
   Post: { // field return type name
     content: 'String'
@@ -110,6 +114,15 @@ export interface NexusGenArgTypes {
     createPost: { // args
       content: string; // String!
       description: string; // String!
+      title: string; // String!
+    }
+    deletePost: { // args
+      id: string; // ID!
+    }
+    updatePost: { // args
+      content: string; // String!
+      description: string; // String!
+      id: string; // ID!
       title: string; // String!
     }
   }
