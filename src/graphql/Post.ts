@@ -1,4 +1,5 @@
 import { extendType, idArg, nonNull, objectType, stringArg } from 'nexus';
+import { NexusGenObjects } from '../../nexus-typegen';
 export const Post = objectType({
   name: 'Post',
   definition(t) {
@@ -8,10 +9,11 @@ export const Post = objectType({
     t.nonNull.string('description');
     t.nonNull.field('postedBy', {
       type: 'User',
-      resolve: (parent, args, context) => {
-        return context.prisma.post
+      resolve: async (parent, args, context) => {
+        let user = await context.prisma.post
           .findUnique({ where: { id: parent.id } })
           .postedBy();
+        return user as NexusGenObjects['User'];
       }
     });
   }
