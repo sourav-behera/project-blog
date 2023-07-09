@@ -23,6 +23,7 @@ type Post {
   content: String!
   description: String!
   id: Int!
+  postedBy: User!
   title: String!
 }
 
@@ -34,4 +35,5 @@ type User {
   email: String!
   id: Int!
   name: String!
+  posts: [Post!]!
 }

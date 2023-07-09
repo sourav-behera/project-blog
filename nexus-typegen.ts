@@ -71,6 +71,7 @@ export interface NexusGenFieldTypes {
     content: string; // String!
     description: string; // String!
     id: number; // Int!
+    postedBy: NexusGenRootTypes['User']; // User!
     title: string; // String!
   };
   Query: {
@@ -82,6 +83,7 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     id: number; // Int!
     name: string; // String!
+    posts: NexusGenRootTypes['Post'][]; // [Post!]!
   };
 }
 
@@ -104,6 +106,7 @@ export interface NexusGenFieldTypeNames {
     content: 'String';
     description: 'String';
     id: 'Int';
+    postedBy: 'User';
     title: 'String';
   };
   Query: {
@@ -115,6 +118,7 @@ export interface NexusGenFieldTypeNames {
     email: 'String';
     id: 'Int';
     name: 'String';
+    posts: 'Post';
   };
 }
 

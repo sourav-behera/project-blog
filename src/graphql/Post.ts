@@ -6,6 +6,14 @@ export const Post = objectType({
     t.nonNull.string('title');
     t.nonNull.string('content');
     t.nonNull.string('description');
+    t.nonNull.field('postedBy', {
+      type: 'User',
+      resolve: (parent, args, context) => {
+        return context.prisma.post
+          .findUnique({ where: { id: parent.id } })
+          .postedBy();
+      }
+    });
   }
 });
 
@@ -35,11 +43,16 @@ export const LinkMutation = extendType({
       },
       resolve: async (parent, args, context) => {
         const { title, description, content } = args;
+        const { userId } = context;
+        if (!userId) {
+          throw new Error('You must sign in before you post');
+        }
         let newPost = await context.prisma.post.create({
           data: {
             title,
             description,
-            content
+            content,
+            postedBy: { connect: { id: userId } }
           }
         });
         return newPost;
