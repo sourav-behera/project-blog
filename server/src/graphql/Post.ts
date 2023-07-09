@@ -10,7 +10,7 @@ export const Post = objectType({
     t.nonNull.field('postedBy', {
       type: 'User',
       resolve: async (parent, args, context) => {
-        let user = await context.prisma.post
+        const user = await context.prisma.post
           .findUnique({ where: { id: parent.id } })
           .postedBy();
         return user as NexusGenObjects['User'];
@@ -25,7 +25,7 @@ export const LinkQuery = extendType({
     t.nonNull.list.nonNull.field('feed', {
       type: 'Post',
       resolve(parent, args, context) {
-        let posts = context.prisma.post.findMany();
+        const posts = context.prisma.post.findMany();
         return posts;
       }
     });
@@ -49,7 +49,7 @@ export const LinkMutation = extendType({
         if (!userId) {
           throw new Error('You must sign in before you post');
         }
-        let newPost = await context.prisma.post.create({
+        const newPost = await context.prisma.post.create({
           data: {
             title,
             description,
@@ -69,7 +69,7 @@ export const LinkMutation = extendType({
       },
       resolve: async (parent, args, context) => {
         const { id } = args;
-        let post = await context.prisma.post.delete({
+        const post = await context.prisma.post.delete({
           where: { id: parseInt(id) }
         });
         return post;
@@ -87,7 +87,7 @@ export const LinkMutation = extendType({
       },
       resolve: async (parent, args, context) => {
         const { id, title, description, content } = args;
-        let post = context.prisma.post.update({
+        const post = context.prisma.post.update({
           where: {
             id: parseInt(id)
           },
