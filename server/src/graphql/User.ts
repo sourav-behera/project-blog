@@ -10,7 +10,7 @@ export const User = objectType({
     t.nonNull.list.nonNull.field('posts', {
       type: 'Post',
       resolve: async (parent, args, context) => {
-        let posts = await context.prisma.user
+        const posts = await context.prisma.user
           .findUnique({ where: { id: parent.id } })
           .posts();
         return posts as NexusGenObjects['Post'][];

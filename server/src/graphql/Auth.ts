@@ -1,4 +1,4 @@
-import { arg, extendType, nonNull, objectType, stringArg } from 'nexus';
+import { extendType, nonNull, objectType, stringArg } from 'nexus';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { APP_SECRET } from '../util/auth';
@@ -66,7 +66,7 @@ export const AuthMutation = extendType({
           throw new Error('An account already exisits on this email');
         }
         // create one if doesn't exist
-        let hash = await bcrypt.hash(password, 10);
+        const hash = await bcrypt.hash(password, 10);
         user = await context.prisma.user.create({
           data: {
             name: name,
@@ -74,7 +74,7 @@ export const AuthMutation = extendType({
             password: hash
           }
         });
-        let token = jwt.sign({ userId: user.id }, APP_SECRET);
+        const token = jwt.sign({ userId: user.id }, APP_SECRET);
         return {
           token,
           user

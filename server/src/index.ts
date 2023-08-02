@@ -3,7 +3,8 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { schema } from './schema';
 import { context } from './context';
 const server = new ApolloServer({
-  schema
+  schema,
+  introspection: true,
 });
 const PORT = parseInt(process.env.PORT as string);
 async function startApolloServer() {
